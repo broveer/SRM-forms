@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Face Validity Form
+
+A Next.js application for collecting face validity assessments with 15 questions, each rated on 4 categories (Clarity, Simplicity, Relevance, Ambiguity) on a 1-4 scale.
+
+## Features
+
+- Responsive form with 15 questions
+- Ratings for Clarity, Simplicity, Relevance, and Ambiguity (1-4 scale)
+- Form validation
+- Submission to MongoDB
+- Success/Error UI feedback
+- Ready for Vercel deployment
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- MongoDB database
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Copy the environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+4. Update `.env.local` with your MongoDB connection string:
+   ```
+   MONGODB_URI=your_mongodb_connection_string_here
+   ```
+
+### Development
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Building
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Build the application:
 
-## Learn More
+```bash
+npm run build
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment on Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Push your code to a Git repository (GitHub, GitLab, etc.)
+2. Connect your repository to Vercel
+3. Add environment variables in Vercel dashboard:
+   - `MONGODB_URI`: Your MongoDB connection string
+4. Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For more details, see [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying).
 
-## Deploy on Vercel
+## API
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### POST /api/submit
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Submits the form data to MongoDB.
+
+**Request Body:**
+```json
+{
+  "0": { "clarity": 3, "simplicity": 2, "relevance": 4, "ambiguity": 1 },
+  "1": { "clarity": 4, "simplicity": 3, "relevance": 3, "ambiguity": 2 },
+  // ... for all 15 questions
+}
+```
+
+**Response:**
+- Success: `{ "success": true, "id": "inserted_id" }`
+- Error: `{ "error": "error_message" }`
+
+## Database
+
+Data is stored in MongoDB database `Forms-data`, collection `faceValidity`.
+
+Each document includes the form data and a `submittedAt` timestamp.
+
+## Customization
+
+- Update the `questions` array in `src/app/page.tsx` with your actual questions
+- Modify the form UI in the same file
+- Adjust validation logic as needed
+
+## Testing
+
+Run tests:
+
+```bash
+npm test
+```
+
+Note: Minimal tests are included. Expand as needed.

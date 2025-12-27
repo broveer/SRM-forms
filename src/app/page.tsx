@@ -1,65 +1,198 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+
+const categories = ['Clarity', 'Simplicity', 'Relevance', 'Ambiguity'] as const;
+const ratings = [1, 2, 3, 4] as const;
+
+// Placeholder questions - replace with actual questions
+const questions = Array.from({ length: 15 }, (_, i) => `Question ${i + 1}: This is a sample question for face validity assessment. Please rate it on the following categories.`);
+
+type ResponderInfo = {
+  name: string;
+  experience: string;
+  qualifications: string;
+  expertiseReason: string;
+};
+
+type FormData = {
+  [key: string]: {
+    clarity: number;
+    simplicity: number;
+    relevance: number;
+    ambiguity: number;
+  };
+};
 
 export default function Home() {
+  const [formData, setFormData] = useState<FormData>({});
+  const [responderInfo, setResponderInfo] = useState<ResponderInfo>({
+    name: '',
+    experience: '',
+    qualifications: '',
+    expertiseReason: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+
+  const handleRatingChange = (questionIndex: number, category: string, rating: number) => {
+    setFormData(prev => ({
+      ...prev,
+      [questionIndex]: {
+        ...prev[questionIndex],
+        [category.toLowerCase()]: rating,
+      },
+    }));
+  };
+
+  const validateForm = () => {
+    // Check responder info
+    if (!responderInfo.name.trim() || !responderInfo.experience.trim() || !responderInfo.qualifications.trim() || !responderInfo.expertiseReason.trim()) {
+      return false;
+    }
+    // Check ratings
+    for (let i = 0; i < questions.length; i++) {
+      const qData = formData[i];
+      if (!qData) return false;
+      for (const cat of categories) {
+        const key = cat.toLowerCase() as keyof typeof qData;
+        if (qData[key] === undefined) return false;
+      }
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateForm()) {
+      setSubmitStatus({ type: 'error', message: 'Please complete all ratings before submitting.' });
+      return;
+    }
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    try {
+      const response = await fetch('/api/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ responderInfo, ratings: formData }),
+      });
+      if (response.ok) {
+        setSubmitStatus({ type: 'success', message: 'Form submitted successfully!' });
+        setFormData({});
+        setResponderInfo({
+          name: '',
+          experience: '',
+          qualifications: '',
+          expertiseReason: '',
+        });
+      } else {
+        const error = await response.json();
+        setSubmitStatus({ type: 'error', message: error.error || 'Submission failed.' });
+      }
+    } catch (error) {
+      setSubmitStatus({ type: 'error', message: 'Network error. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">Face Validity Assessment</h1>
+        <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Responder Information</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Name</label>
+                <input
+                  type="text"
+                  value={responderInfo.name}
+                  onChange={(e) => setResponderInfo(prev => ({ ...prev, name: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Years of Experience in the Field</label>
+                <input
+                  type="text"
+                  value={responderInfo.experience}
+                  onChange={(e) => setResponderInfo(prev => ({ ...prev, experience: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700">Professional Qualifications</label>
+                <textarea
+                  value={responderInfo.qualifications}
+                  onChange={(e) => setResponderInfo(prev => ({ ...prev, qualifications: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  rows={3}
+                  required
+                />
+              </div>
+              <div className="space-y-2 md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700">Why do you consider yourself an expert in assessing face validity?</label>
+                <textarea
+                  value={responderInfo.expertiseReason}
+                  onChange={(e) => setResponderInfo(prev => ({ ...prev, expertiseReason: e.target.value }))}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  rows={3}
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          {questions.map((question, index) => (
+            <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">{question}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {categories.map(category => (
+                  <div key={category} className="space-y-2">
+                    <label className="block text-sm font-medium text-gray-700">{category}</label>
+                    <div className="flex space-x-2">
+                      {ratings.map(rating => {
+                        const isSelected = formData[index]?.[category.toLowerCase() as keyof typeof formData[number]] === rating;
+                        return (
+                          <button
+                            key={rating}
+                            type="button"
+                            onClick={() => handleRatingChange(index, category, rating)}
+                            className={`px-3 py-2 border rounded-md transition-colors ${
+                              isSelected
+                                ? 'bg-blue-600 text-white border-blue-600'
+                                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                            }`}
+                          >
+                            {rating}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+              {isSubmitting ? 'Submitting...' : 'Submit Assessment'}
+            </button>
+          </div>
+        </form>
+        {submitStatus && (
+          <div className={`mt-8 p-4 rounded-md ${submitStatus.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            {submitStatus.message}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
