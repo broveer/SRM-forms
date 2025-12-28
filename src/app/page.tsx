@@ -6,7 +6,20 @@ const categories = ['Clarity', 'Simplicity', 'Relevance', 'Ambiguity'] as const;
 const ratings = [1, 2, 3, 4] as const;
 
 // Placeholder questions - replace with actual questions
-const questions = Array.from({ length: 15 }, (_, i) => `Question ${i + 1}: This is a sample question for face validity assessment. Please rate it on the following categories.`);
+const questions = [
+  "What is your highest educational qualification?",
+  "How many years have you been investing in the stock market?",
+  "Which platform do you primarily use for financial advice/news?",
+  "Have you ever invested in a stock or IPO solely based on a recommendation from a social media influencer?",
+  "How frequently do you trade in the stock market?",
+  "Approximately what percentage (%) of your total investment portfolio is allocated to High-Risk/SME stocks?",
+  "Please rate your agreement with the following statements regarding your investment behavior.",
+  "On a scale of 1 to 10, how much do you trust financial advice given by influencers who do NOT disclose their qualifications?",
+  "Are you aware of SEBI's recent crackdown on unregistered financial advisors?",
+  "When viewing a \"Sponsored\" post about a stock, how likely are you to be skeptical of the advice?",
+  "Rank the following factors in order of importance when you choose an IPO.",
+  "In your opinion, what is the biggest risk of following \"Finfluencers\" in India today?"
+];
 
 type ResponderInfo = {
   name: string;
