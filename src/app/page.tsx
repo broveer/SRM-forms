@@ -116,6 +116,26 @@ export default function Home() {
         <p className="text-lg text-center text-gray-700 mb-8 italic">
           We are students from Christ (Deemed to be University) conducting a study on how social media influences investment decisions in Indian stock markets. All data will be kept confidential.
         </p>
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">About Face Validity Assessment</h2>
+          <div className="space-y-4 text-gray-700">
+            <p>
+              <strong>Face validity</strong> is a measure of whether a test or survey appears to measure what it is supposed to measure. In this study, we are assessing whether our survey questions effectively capture the intended concepts related to investor behavior and social media influence.
+            </p>
+            <div>
+              <h3 className="font-medium text-gray-800 mb-2">Please rate each question on these 4 categories:</h3>
+              <ul className="space-y-2">
+                <li><strong className="text-green-600">Clarity:</strong> How clear and understandable is the question?</li>
+                <li><strong className="text-green-600">Simplicity:</strong> How straightforward and uncomplicated is the question?</li>
+                <li><strong className="text-green-600">Relevance:</strong> How relevant is the question to the topic of social media influence on investment decisions?</li>
+                <li><strong className="text-green-600">Ambiguity:</strong> How ambiguous or unclear is the question? (Higher ratings indicate more ambiguity)</li>
+              </ul>
+            </div>
+            <p className="text-sm text-gray-600">
+              Rate each category from 1 (low) to 4 (high) based on your expert assessment.
+            </p>
+          </div>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Responder Information</h2>
@@ -210,13 +230,33 @@ export default function Home() {
         )}
       </div>
       <footer className="mt-12 text-center text-gray-600">
+        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200 mb-4">
+          <h4 className="font-semibold text-blue-800 mb-2">🔒 Privacy & Security</h4>
+          <ul className="text-sm text-blue-700 space-y-1">
+            <li>• Data is encrypted and stored securely on MongoDB</li>
+            <li>• Hosted on Vercel with SSL encryption (HTTPS)</li>
+            <li>• No personal information is shared with third parties</li>
+            <li>• Data will only be used for academic research purposes</li>
+          </ul>
+        </div>
         <div className="flex items-center justify-center mb-2">
           <span className="text-green-600 text-xl mr-2">✓</span>
           <span className="font-medium">This website is safe and secure</span>
         </div>
-        <p className="text-sm">
+        <p className="text-sm mb-4">
           Hosted on Vercel - a trusted platform used by millions of developers worldwide for secure web applications.
         </p>
+        <div className="flex justify-center items-center space-x-4">
+          <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
+            ✓ SSL Secured
+          </span>
+          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">
+            🏛️ University Study
+          </span>
+          <span className="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">
+            🔐 GDPR Compliant
+          </span>
+        </div>
       </footer>
     </div>
   );
