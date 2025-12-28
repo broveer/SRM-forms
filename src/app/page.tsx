@@ -209,6 +209,15 @@ export default function Home() {
           </div>
         )}
       </div>
+      <footer className="mt-12 text-center text-gray-600">
+        <div className="flex items-center justify-center mb-2">
+          <span className="text-green-600 text-xl mr-2">✓</span>
+          <span className="font-medium">This website is safe and secure</span>
+        </div>
+        <p className="text-sm">
+          Hosted on Vercel - a trusted platform used by millions of developers worldwide for secure web applications.
+        </p>
+      </footer>
     </div>
   );
 }
