@@ -110,9 +110,12 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-green-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-900 mb-8">Face Validity Assessment</h1>
+        <h1 className="text-3xl font-bold text-center text-gray-900 mb-4 underline decoration-green-500 decoration-2">Digital Hype & The Indian Retail Investor</h1>
+        <p className="text-lg text-center text-gray-700 mb-8 italic">
+          We are students from Christ (Deemed to be University) conducting a study on how social media influences investment decisions in Indian stock markets. All data will be kept confidential.
+        </p>
         <form onSubmit={handleSubmit} className="space-y-8">
           <div className="bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Responder Information</h2>
@@ -123,7 +126,7 @@ export default function Home() {
                   type="text"
                   value={responderInfo.name}
                   onChange={(e) => setResponderInfo(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
@@ -133,7 +136,7 @@ export default function Home() {
                   type="text"
                   value={responderInfo.experience}
                   onChange={(e) => setResponderInfo(prev => ({ ...prev, experience: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   required
                 />
               </div>
@@ -142,7 +145,7 @@ export default function Home() {
                 <textarea
                   value={responderInfo.qualifications}
                   onChange={(e) => setResponderInfo(prev => ({ ...prev, qualifications: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   rows={3}
                   required
                 />
@@ -152,7 +155,7 @@ export default function Home() {
                 <textarea
                   value={responderInfo.expertiseReason}
                   onChange={(e) => setResponderInfo(prev => ({ ...prev, expertiseReason: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   rows={3}
                   required
                 />
@@ -176,8 +179,8 @@ export default function Home() {
                             onClick={() => handleRatingChange(index, category, rating)}
                             className={`px-3 py-2 border rounded-md transition-colors ${
                               isSelected
-                                ? 'bg-blue-600 text-white border-blue-600'
-                                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                                ? 'bg-green-600 text-white border-green-600'
+                                : 'bg-white text-gray-700 border-gray-300 hover:bg-green-50'
                             }`}
                           >
                             {rating}
@@ -194,7 +197,7 @@ export default function Home() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+              className="px-6 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
             >
               {isSubmitting ? 'Submitting...' : 'Submit Assessment'}
             </button>
