@@ -12,13 +12,13 @@ const questions = [
   "Which platform do you primarily use for financial advice/news?",
   "Have you ever invested in a stock or IPO solely based on a recommendation from a social media influencer?",
   "How frequently do you trade in the stock market?",
-  "Approximately what percentage (%) of your total investment portfolio is allocated to High-Risk/SME stocks?",
-  "Please rate your agreement with the following statements regarding your investment behavior.",
+  "Do you invest a lot of your money in risky stocks like SMEs?", /* "Approximately what percentage (%) of your total investment portfolio is allocated to High-Risk/SME stocks?", */
+  "Do you find Annual Reports boring and prefer watching Instagram Reels for advice?", /* "Please rate your agreement with the following statements regarding your investment behavior.", */
   "On a scale of 1 to 10, how much do you trust financial advice given by influencers who do NOT disclose their qualifications?",
   "Are you aware of SEBI's recent crackdown on unregistered financial advisors?",
   "When viewing a \"Sponsored\" post about a stock, how likely are you to be skeptical of the advice?",
   "Rank the following factors in order of importance when you choose an IPO.",
-  "In your opinion, what is the biggest risk of following \"Finfluencers\" in India today?"
+  "Don't you agree that finfluencers are dangerous for the Indian economy?" /* "In your opinion, what is the biggest risk of following \"Finfluencers\" in India today?" */
 ];
 
 type ResponderInfo = {
