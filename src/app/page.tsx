@@ -170,16 +170,6 @@ export default function Home() {
                   required
                 />
               </div>
-              <div className="space-y-2 md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700">Why do you consider yourself an expert in assessing face validity?</label>
-                <textarea
-                  value={responderInfo.expertiseReason}
-                  onChange={(e) => setResponderInfo(prev => ({ ...prev, expertiseReason: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                  rows={3}
-                  required
-                />
-              </div>
             </div>
           </div>
             {questions.map((question, index) => (
