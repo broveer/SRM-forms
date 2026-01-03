@@ -25,7 +25,6 @@ type ResponderInfo = {
   name: string;
   experience: string;
   qualifications: string;
-  expertiseReason: string;
 };
 
 type FormData = {
@@ -43,7 +42,6 @@ export default function Home() {
     name: '',
     experience: '',
     qualifications: '',
-    expertiseReason: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
@@ -60,7 +58,7 @@ export default function Home() {
 
   const validateForm = () => {
     // Check responder info
-    if (!responderInfo.name.trim() || !responderInfo.experience.trim() || !responderInfo.qualifications.trim() || !responderInfo.expertiseReason.trim()) {
+    if (!responderInfo.name.trim() || !responderInfo.experience.trim() || !responderInfo.qualifications.trim()) {
       return false;
     }
     // Check ratings
@@ -96,7 +94,6 @@ export default function Home() {
           name: '',
           experience: '',
           qualifications: '',
-          expertiseReason: '',
         });
       } else {
         const error = await response.json();
