@@ -182,37 +182,37 @@ export default function Home() {
               </div>
             </div>
           </div>
-          {questions.map((question, index) => (
+            {questions.map((question, index) => (
             <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">{question}</h2>
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">{index + 1}. {question}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {categories.map(category => (
-                  <div key={category} className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">{category}</label>
-                    <div className="flex space-x-2">
-                      {ratings.map(rating => {
-                        const isSelected = formData[index]?.[category.toLowerCase() as keyof typeof formData[number]] === rating;
-                        return (
-                          <button
-                            key={rating}
-                            type="button"
-                            onClick={() => handleRatingChange(index, category, rating)}
-                            className={`px-3 py-2 border rounded-md transition-colors ${
-                              isSelected
-                                ? 'bg-green-600 text-white border-green-600'
-                                : 'bg-white text-gray-700 border-gray-300 hover:bg-green-50'
-                            }`}
-                          >
-                            {rating}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
+              {categories.map(category => (
+                <div key={category} className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">{category}</label>
+                <div className="flex space-x-2">
+                  {ratings.map(rating => {
+                  const isSelected = formData[index]?.[category.toLowerCase() as keyof typeof formData[number]] === rating;
+                  return (
+                    <button
+                    key={rating}
+                    type="button"
+                    onClick={() => handleRatingChange(index, category, rating)}
+                    className={`px-3 py-2 border rounded-md transition-colors ${
+                      isSelected
+                      ? 'bg-green-600 text-white border-green-600'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-green-50'
+                    }`}
+                    >
+                    {rating}
+                    </button>
+                  );
+                  })}
+                </div>
+                </div>
+              ))}
               </div>
             </div>
-          ))}
+            ))}
           <div className="flex justify-center">
             <button
               type="submit"
